@@ -24,6 +24,8 @@ jobs:
       with:
         ref: master
         path: "./github/workflows/"
+    - name: testing ls
+      run: ls
     - name: Install dependencies
       run: python duplicates.py ./
       working-directory: ${{ env.working-directory }}
