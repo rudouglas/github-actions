@@ -4,9 +4,10 @@ import math
 
 count = 0
 totalSize = 0
+duplicateSize = 0
 
 def findDup(parentFolder):
-    global count, totalSize
+    global count, totalSize, duplicateSize
     # Dups in format {hash:[names]}
     dups = {}
     for dirName, subdirs, fileList in os.walk(parentFolder):
@@ -15,13 +16,14 @@ def findDup(parentFolder):
             # Get the path to the file
             path = os.path.join(dirName, filename)
             size = os.path.getsize(path)
+            totalSize += size
             # Calculate hash
             file_hash = hashfile(path)
             # Add or append the file path
             if file_hash in dups:
                 dups[file_hash].append(path)
                 count += 1
-                totalSize += size
+                duplicateSize += size
             else:
                 dups[file_hash] = [path]
     return dups
@@ -84,7 +86,8 @@ if __name__ == '__main__':
                 sys.exit()
         printResults(dups)
         print("Duplicate Count: ", count)
-        
-        print("Duplicate Size: ", convert_size(totalSize))
+        print("Total Size: ", convert_size(totalSize))
+        print("Duplicate Size: ", convert_size(duplicateSize))
+        print("% Saved: ", (duplicateSize *100) / totalSize)
     else:
         print('Usage: python dupFinder.py folder or python dupFinder.py folder1 folder2 folder3')    
