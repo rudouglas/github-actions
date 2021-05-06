@@ -1,7 +1,12 @@
 import os, sys
 import hashlib
- 
+import math
+
+count = 0
+totalSize = 0
+
 def findDup(parentFolder):
+    global count, totalSize
     # Dups in format {hash:[names]}
     dups = {}
     for dirName, subdirs, fileList in os.walk(parentFolder):
@@ -9,11 +14,14 @@ def findDup(parentFolder):
         for filename in fileList:
             # Get the path to the file
             path = os.path.join(dirName, filename)
+            size = os.path.getsize(path)
             # Calculate hash
             file_hash = hashfile(path)
             # Add or append the file path
             if file_hash in dups:
                 dups[file_hash].append(path)
+                count += 1
+                totalSize += size
             else:
                 dups[file_hash] = [path]
     return dups
@@ -52,7 +60,15 @@ def printResults(dict1):
  
     else:
         print('No duplicate files found.')
- 
+
+def convert_size(size_bytes):
+    if size_bytes == 0:
+       return "0B"
+    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+    i = int(math.floor(math.log(size_bytes, 1024)))
+    p = math.pow(1024, i)
+    s = round(size_bytes / p, 2)
+    return "%s %s" % (s, size_name[i])
  
 if __name__ == '__main__':
     if len(sys.argv) > 1:
@@ -67,5 +83,8 @@ if __name__ == '__main__':
                 print('%s is not a valid path, please verify' % i)
                 sys.exit()
         printResults(dups)
+        print("Duplicate Count: ", count)
+        
+        print("Duplicate Size: ", convert_size(totalSize))
     else:
-        print('Usage: python dupFinder.py folder or python dupFinder.py folder1 folder2 folder3')
+        print('Usage: python dupFinder.py folder or python dupFinder.py folder1 folder2 folder3')    
