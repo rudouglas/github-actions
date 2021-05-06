@@ -23,9 +23,8 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: master
-        path: "./github/workflows/"
     - name: testing ls
       run: ls
     - name: Install dependencies
-      run: python duplicates.py ./
+      run: python github/workflows/duplicates.py ./
       working-directory: ${{ env.working-directory }}
