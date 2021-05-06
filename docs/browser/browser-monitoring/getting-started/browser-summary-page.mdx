@@ -1,0 +1,95 @@
+---
+title: Browser Summary page
+tags:
+  - Browser
+  - Browser monitoring
+  - Getting started
+metaDescription: 'New Relic Browser''s Overview page displays a summary of your app''s browser-side performance, including page load timing, and throughput charts.'
+redirects:
+  - /docs/new-relic-browser/browser-overview
+  - /docs/browser/new-relic-browser/dashboard-details/browser-overview-dashboard
+  - /docs/browser/new-relic-browser/getting-started/browser-overview-website-performance-glance
+  - /docs/browser/new-relic-browser/getting-started/browser-overview-page-website-performance-summary
+  - /docs/browser/browser-monitoring/getting-started/browser-overview-page-website-performance-summary
+---
+
+[Browser monitoring](/docs/browser/new-relic-browser/getting-started/new-relic-browser)'s **Summary** page summarizes the real-user browser performance of your app. Use the Summary page to:
+
+* View trends in an app's browser-side performance
+* Quickly troubleshoot page load timing issues
+* Navigate to other Browser UI pages
+
+## View the Summary page [#viewing]
+
+To view a summary of browser performance for an app:
+
+1. Go to [one.newrelic.com](https://one.newrelic.com), click Browser, and select an app from the [Browser index](/docs/browser/new-relic-browser/getting-started/browser-apps-index).
+2. From the app's **Summary** page, use [standard New Relic page functions](/docs/data-analysis/user-interface-functions/view-your-data/standard-page-functions) to drill down into detailed information.
+
+![Here is a screen capture showing the browser summary screen.](./images/browser_summary_page.png "browser_summary.png")
+
+<figcaption>
+  **[one.newrelic.com](https://one.newrelic.com) > Browser > (select an app) > Summary:** After you select an application from the New Relic Browser apps index, the **Summary** page shows a summary of browser performance for that app.
+</figcaption>
+
+The Summary page includes:
+
+* [Core Web Vitals widgets](#core_vitals)
+* [User time on the site](#user_time)
+* [Initial page load and route change chart](#page_load)
+* [User-centric page load times chart](#user_load)
+* [Throughput chart](#throughput-chart)
+* [Front end vs. back end chart](#front_vs_back)
+* For Browser Pro: Charts for [First interaction by device type, First interaction by user agent, JavaScript errors, and Longest first input delay by URL](#other-charts)
+* [Related Entities widget](#related_entities)
+* [View Synthetics monitors](#synthetic_monitors)
+
+## Core Web Vitals widgets [#core_vitals]
+
+The **Core Web Vitals** widgets show how your browser performs according to Google's [Core Web Vitals](/docs/browser/new-relic-browser/page-load-timing-resources/pageviewtiming-async-or-dynamic-page-details). The Core Web Vitals widgets include:
+  - LCP - Largest Contentful Paint
+  - FID - First Input Delay
+  - CLS - Cumulative Layout Shift
+
+## User time on the site [#user_time]
+
+The **User time on the site** widget shows the time a user remains on the site.
+
+## Initial page load and route change chart [#page_load]
+
+The **Initial page load and route change** chart shows the load time of a traditional URL change stemming from a load or reload of a URL. This chart appears with more detail about the [page load timing process](/docs/browser/new-relic-browser/page-load-timing-resources/page-load-timing-process) on the [Browser page load time page](/docs/browser/new-relic-browser/dashboard-details/page-views-dashboard).
+
+## User-centric page load times chart [#user_load]
+
+The **User-centric page load times** chart shows the load time of a page for a user. This chart appears with more detail about the [page load timing process](/docs/browser/new-relic-browser/page-load-timing-resources/page-load-timing-process) on the [Browser page load time page](/docs/browser/new-relic-browser/dashboard-details/page-views-dashboard).
+
+## Throughput chart [#throughput-chart]
+
+The **Throughput** chart displays browser throughput as pages per minute (ppm). The value in the upper right of the chart is the average value for the selected time range.
+
+If you have enabled [SPA monitoring](/docs/browser/single-page-app-monitoring/get-started/welcome-single-page-app-monitoring) enabled and the **Summary** page shows the **SPA load time** chart, the **Throughput** chart will also use SPA data.
+
+<Callout variant="tip">
+  App server requests per minute (rpm) may show a different measurement than the browser [page load timing](/docs/browser/new-relic-browser/page-load-timing/page-load-timing-process)'s pages per minute (ppm).
+</Callout>
+
+## Front end vs. back end chart [#front_vs_back]
+
+The **Front end vs. back end** chart links to the connect APM service application. For details on APM and tracing, see [Language agents and distributed tracing](docs/distributed-tracing/enable-configure/language-agents-enable-distributed-tracing).
+
+## First interaction by device type, First interaction by user agent, JavaScript errors, and Longest first input delay by URL [#other-charts]
+
+Depending on your subscription level, the following tables and charts may also be on your Summary page:
+
+* **First interaction by device type**: Summarizes the [Browser page load time page](/docs/browser/new-relic-browser/dashboard-details/page-views-dashboard).
+* **First interaction by user agent**: Summarizes the [Browser page load time page](/docs/browser/new-relic-browser/dashboard-details/page-views-dashboard).
+* **JavaScript errors**: Summarizes the [JS errors page](/docs/browser/new-relic-browser/browser-pro-features/javascript-errors-page-examining-errors-over-time).
+* **Longest first input delay by URL**: Summarizes the [Browser page load time page](/docs/browser/new-relic-browser/dashboard-details/page-views-dashboard).
+
+## Related Entities widget [#related_entities]
+
+The **Related Entities** widget shows all the entities that are related to the browser. To understand more about connections between entities, read about [Entity relationships](docs/new-relic-one/use-new-relic-one/core-concepts/what-entity-new-relic/#related-entities).
+
+## View Synthetics monitors [#synthetic_monitors]
+
+The ![View Synthetics monitors button](./images/view_synthetic_monitors.png "view_synthetic_monitors") button directs you to the **Synthetics** page. To read more about Synthetics, see [Synthetic monitoring](docs/synthetics).

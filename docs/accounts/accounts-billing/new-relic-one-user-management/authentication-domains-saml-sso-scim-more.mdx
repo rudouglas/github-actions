@@ -1,0 +1,130 @@
+---
+title: 'Authentication domain settings: SAML SSO, SCIM, and more'
+tags:
+  - Accounts
+  - Accounts and billing
+  - New Relic One user management
+metaDescription: >-
+  New Relic user authentication: how your users are added, SAML SSO, SCIM,
+  automated user management, and more.
+redirects:
+  - >-
+    /docs/accounts/accounts-billing/new-relic-one-pricing-users/configure-authentication-domains
+  - >-
+    /docs/accounts/accounts-billing/new-relic-one-user-management/configure-authentication-domains-sso
+  - >-
+    /docs/accounts/accounts-billing/new-relic-one-user-management/user-authentication-saml-sso-scim-more
+watermark: |-
+  New 
+  user
+  model    
+---
+
+<Callout variant="important">
+  This doc is for managing users on the [New Relic One user model](/docs/accounts/accounts-billing/new-relic-one-user-management/new-relic-one-user-model-understand-user-structure). For managing users on our original user model, see [Original users](/docs/accounts/original-accounts-billing/original-users-roles). [Learn about user models](/docs/accounts/original-accounts-billing/original-product-based-pricing/overview-changes-pricing-user-model#user-models).
+</Callout>
+
+To manage their users, New Relic organizations can configure "authentication domains," which control how users are added to a New Relic account, how they’re authenticated, and more.
+
+## Requirements [#requirements]
+
+To check if you have access to these features, you can go to the [authentication domain settings UI](#ui) and see if you can configure settings.
+
+Requirements to configure these settings:
+
+* These features are for managing users on the [New Relic One user model](/docs/accounts/accounts-billing/new-relic-one-pricing-users/users-roles). For users on our original user model, see [Original account management](/docs/accounts/original-accounts-billing).
+* Pro [tier](https://newrelic.com/pricing) is required for all options except [automated user management](/docs/accounts/accounts/automated-user-management/automated-user-provisioning-single-sign), which requires Enterprise tier.
+* You must be in a user group that has the [**Authentication domain manager** role](/docs/accounts/accounts-billing/new-relic-one-pricing-users/users-roles#standard-roles).
+* SAML support:
+  * [Active Directory Federation Services (ADFS)](http://technet.microsoft.com/en-us/library/hh831502.aspx "Link opens in a new window")
+  * [Auth0](http://developers.auth0.com/newrelic)
+  * [Azure AD (Microsoft Azure Active Directory)](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/new-relic-limited-release-tutorial) 
+  * [Okta](http://www.okta.com/newrelic)
+  * [OneLogin](http://www.onelogin.com/partners/app-partners/new-relic/)
+  * [Ping Identity](https://www.pingidentity.com/en.html)
+  * [Salesforce](http://wiki.developerforce.com/page/Configuring-SAML-SSO-to-NewRelic)
+  * Generic support for SSO systems that use SAML 2.0
+
+## What is an authentication domain? [#auth-domain-definition]
+
+An "authentication domain" is a grouping of New Relic users governed by specific settings, like how they are provisioned (added to New Relic), how they are authenticated (logged in), and more.  
+
+When someone creates a New Relic account, the default authentication settings are:
+
+* Users are manually added to New Relic
+* Users manually log in using their username and password
+
+Those default settings would be under one "authentication domain." Another authentication domain might be set up like this:
+
+* Users are added and managed automatically from an identity provider (like Okta or Azure AD)
+* Users are logged in using SAML single sign-on (SSO) from an identity provider
+
+When you add users to New Relic, they’re added within a specific authentication domain. Users in one authentication domain are not available for management when in another domain. Typically organizations will have either one or two authentication domains: one for the manual, default methods and one for the methods tied to their identity provider.
+
+Configurable elements of an authentication domain include:
+
+* Source of users (managed manually via the UI or managed automatically via identity provider)
+* Authentication method (using manual username/password login or using SSO).
+* Session management (how long a user can stay logged in, how long a browser session can be idle)
+
+## Configure authentication domain via UI [#ui]
+
+If you meet the [requirements](#requirements), you can add and manage authentication domains. To do this: from the [account dropdown](/docs/using-new-relic/welcome-new-relic/get-started/glossary#account-dropdown), click **Organization and access**, and then click **Authentication domains**.
+
+For more about the configuration options, keep reading.
+
+## Source of users [#source-users]
+
+<Callout variant="tip">
+  Before configuring SCIM, please read our [AUM docs](/docs/accounts/accounts/automated-user-management/automated-user-provisioning-single-sign).
+</Callout>
+
+From the [authentication domain UI](#ui), you can set one of two options for how users are added to New Relic:
+
+* **Manual:** this means that your users are added manually to New Relic.
+* **SCIM:** enabling SCIM lets you use our automated user management (AUM) to import/manage users from your identity provider. Please read [requirements and impacts](/docs/accounts/accounts/automated-user-management/automated-user-provisioning-single-sign) before enabling.
+
+## Authentication
+
+The authentication method is the method by which New Relic users log in to New Relic. All users in an authentication domain have a single authentication method. Once a user authenticates with New Relic, they have access to any account they've been granted permissions for.
+
+There are two authentication options:
+
+* Username/password: your users log in via standard username and password.
+* SAML SSO: your users log in via SAML single sign-on (SSO) via your identity provider.
+
+<Callout variant="tip">
+  How users authenticate to New Relic is independent of [how they're added](#source-users) (manually or SCIM). SCIM-added users require SAML SSO but manually-added users may or may not use SAML SSO.
+</Callout>
+
+### Configure SAML SSO [#saml]
+
+<Callout variant="tip">
+  Recommended: first read the [requirements](#requirements).
+</Callout>
+
+If you're using Azure, Okta, or OneLogin, your first step is to get and enable the New Relic integration for that service. To do this, follow the "Add SCIM/SSO application" instructions in these docs and then return here for more instructions: [Azure](/docs/accounts/accounts/automated-user-management/azure-ad-scimsso-application-configuration/#add-app) | [Okta](/docs/accounts/accounts/automated-user-management/okta-scimsso-application-configuration/#add-application) | [OneLogin](/docs/accounts/accounts/automated-user-management/onelogin-scimsso-application-configuration/#background).
+
+If you're using a custom SAML 2.0 integration, note that when configuring SAML manually, we require the option for signed SAML assertions to be enabled.
+
+Next, you'll enable SAML SSO from New Relic's [authentication domain UI](#ui):
+
+1. Under **Authentication**, click **Configure**.
+2. Under **Method of authenticating users**, select **SAML SSO**.
+3. Under **Provided by New Relic**, review your New Relic SAML service provider details.
+4. Under **Provided by you**, set the source of SAML metadata with a URL pointing to your SAML metadata (recommended). This URL is supplied by your identity provider and should conform to SAML V2.0 metadata standards.
+
+   <Callout variant="tip">
+     Alternatively, set the source of SAML metadata by selecting **Upload a certificate** and selecting **Choose file**. This should be a PEM encoded x509 certificate. A certificate should only be uploaded if your identity provider does not support dynamic configuration.
+   </Callout>
+5. Under **Provided by you**, set the SSO target URL supplied by your identity provider.
+6. If your organization's SAML integration provides a redirect URL for logout, enter the **Logout redirect URL**; otherwise, leave it blank.
+7. Next, you'll need to give your users access to New Relic. This usually takes the form of [creating groups and adding users to groups and accounts](/docs/accounts/accounts-billing/new-relic-one-user-management/tutorial-add-new-user-groups-roles-new-relic-one-user-model/). 
+
+## Other settings [#session-mgmt]
+
+In the [authentication domain UI](#ui), you can control several other settings for the users in that domain, including:
+
+* Length of time users can remain logged in.
+* Amount of idle time before a users' session expires. 
+* User access requests: This controls how basic users become full users. You can either allow basic users to self-upgrade or you can require review by admins (users with the [**Authentication domain manager** role](/docs/accounts/accounts-billing/new-relic-one-user-management/new-relic-one-user-model-understand-user-structure/#standard-roles)). Allowing users to self-upgrade allows them to quickly respond to issues. If **Require review** is set, admins receive an email when an upgrade request is made, and can manage requests in the [**User management** UI](/docs/accounts/accounts-billing/new-relic-one-user-management/add-manage-users-groups-roles/#where). For more about basic users and full users, see [User type](/docs/accounts/accounts-billing/new-relic-one-user-management/new-relic-one-user-model-understand-user-structure/#user-type). (Note that upgrade works differently for users on our [original user model](/docs/accounts/original-accounts-billing/original-users-roles/users-roles-original-user-model/#user-type).)
