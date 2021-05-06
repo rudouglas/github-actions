@@ -2,29 +2,18 @@ name: Python package
 
 on: push
 
+    
 jobs:
-  job1:
-
+  build:
     runs-on: ubuntu-latest
-    env: 
-      working-directory: ./
-    strategy:
-      matrix:
-        python-version: [3.9.1]
 
     steps:
-  
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Checkout repo
-      uses: actions/checkout@v2
-      with:
-        ref: master
-    - name: testing ls
-      run: ls
-    - name: Install dependencies
-      run: python github/workflows/duplicates.py ./
-      working-directory: ${{ env.working-directory }}
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.1 #install the python needed
+      - name: execute py script # run the run.py to get the latest data
+        run: |
+          python duplicate.py ./
