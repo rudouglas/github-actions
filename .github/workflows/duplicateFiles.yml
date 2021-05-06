@@ -16,4 +16,4 @@ jobs:
           python-version: 3.9.1 #install the python needed
       - name: execute py script # run the run.py to get the latest data
         run: |
-          python duplicate.py ./
+          python duplicateFiles.py ./
